@@ -1,33 +1,34 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 // Create a Zustand store
 export const useStore = create((set) => ({
-    products: [],
-     addToCart: (item) => 
-        set((state) => {
-            const updatingProduct = state.products?.findIndex((p) => p.id === item.id);    
-            
-            if(updatingProduct > -1){
-                return {
-                    products: state.products.map((each, index) => {
-                        if(index !== updatingProduct){
-                            return each;
-                        }
-                        else{
-                            return {
-                                ...each,
-                                quantity: each.quantity + item.quantity,
-                            }
-                        }
-                    }),
-                }
+  products: [],
+  addToCart: (item) =>
+    set((state) => {
+      const updatingProduct = state.products?.findIndex(
+        (p) => p.id === item.id
+      );
+
+      if (updatingProduct > -1) {
+        return {
+          products: state.products.map((each, index) => {
+            if (index !== updatingProduct) {
+              return each;
             } else {
-                return {
-                    products: [...state.products, item]
-                }
+              return {
+                ...each,
+                quantity: each.quantity + item.quantity,
+              };
             }
-        }),
-    /*
+          }),
+        };
+      } else {
+        return {
+          products: [...state.products, item],
+        };
+      }
+    }),
+  /*
     increaseQuantity: (itemId) => {
         set((state) => {
             const item = state.products.find((p) => p._id === itemId);
@@ -59,8 +60,10 @@ export const useStore = create((set) => ({
         });
     }, */
 
-    /* addToCart: (product) => set((state) => ({products: [...state.products, product]})), */
-    removeFromCart: (productId) => set((state) => ({products: state.products.filter(product => product.id !== productId)})),
-    clearCart: () => set({products: []})
+  /* addToCart: (product) => set((state) => ({products: [...state.products, product]})), */
+  removeFromCart: (productId) =>
+    set((state) => ({
+      products: state.products.filter((product) => product.id !== productId),
+    })),
+  clearCart: () => set({ products: [] }),
 }));
-
