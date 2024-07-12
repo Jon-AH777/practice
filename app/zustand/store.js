@@ -28,39 +28,29 @@ export const useStore = create((set) => ({
         };
       }
     }),
-  /*
-    increaseQuantity: (itemId) => {
-        set((state) => {
-            const item = state.products.find((p) => p._id === itemId);
-            if (item) {
-                item.quantity++;
-                // Dispatch a success toast
-            }
-        });
-    },
-    decreaseQuantity: (itemId) => {
-        set((state) => {
-            const item = state.products.find((p) => p._id === itemId);
-            if (item && item.quantity > 1) {
-                item.quantity--;
-                // Dispatch a success toast
-            }
-        });
-    },
-    deleteItem: (itemId) => {
-        set((state) => {
-            state.products = state.products.filter((p) => p._id !== itemId);
-            // Dispatch a success toast
-        });
-    },
-    resetCart: () => {
-        set((state) => {
-            state.products = [];
-            // Dispatch a success toast
-        });
-    }, */
+  increaseQuantity: (itemId) => {
+    set((state) => {
+      const updatedProducts = state.products.map((p) => {
+        if (p.id === itemId) {
+          return { ...p, quantity: p.quantity + 1 };
+        }
+        return p;
+      });
+      return { products: updatedProducts };
+    });
+  },
+  decreaseQuantity: (itemId) => {
+    set((state) => {
+      const updatedProducts = state.products.map((p) => {
+        if (p.id === itemId && p.quantity > 1) {
+          return { ...p, quantity: p.quantity - 1 };
+        }
+        return p;
+      });
+      return { products: updatedProducts };
+    });
+  },
 
-  /* addToCart: (product) => set((state) => ({products: [...state.products, product]})), */
   removeFromCart: (productId) =>
     set((state) => ({
       products: state.products.filter((product) => product.id !== productId),
