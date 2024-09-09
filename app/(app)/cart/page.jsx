@@ -12,7 +12,7 @@ const Cart = () => {
   return (
     <div className="max-w-container mx-auto px-4 pt-10">
       {products?.map((product) => (
-        <ItemCard key={product} product={product} />
+        <ItemCard key={product.id} product={product} />
       ))}
     </div>
   );
